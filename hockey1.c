@@ -7,6 +7,9 @@
 
 /* 正方形のサイズを指定 */
 GLdouble sx, sy = 0.2;
+GLdouble tx, ty = -0.2;
+GLdouble kx = 0.2;
+GLdouble ky = -0.2;
 
 /* 再描写時に実行される関数*/
 void display(void) {
@@ -17,7 +20,7 @@ void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     /* 線の色を指定: 赤 */
-    glColor3d(1.0, 0.0, 0.0);
+    glColor3d(1.0, 0.0, 0.0); //start point
 
     /* 描写 */
     glBegin(GL_POLYGON);
@@ -27,19 +30,50 @@ void display(void) {
     rate = (double)i / n;
     x = r * cos(2.0 * M_PI * rate);
     y = r * sin(2.0 * M_PI * rate);
-    glVertex3f(sx + x,sy +  y, 0.0); // 頂点座標を指定
+    glVertex3f(sx + x,sy +  y, 0.0); // point cirle
   }
+    glEnd(); //end point
+
+    glColor3d(0.0, 1.0, 0.0);
+    glBegin(GL_POLYGON);
+    /* 図形の頂点を指定 */
+  for (i = 0; i < n; i++) {
+    // 座標を計算
+    rate = (double)i / n;
+    x = r * cos(2.0 * M_PI * rate);
+    y = r * sin(2.0 * M_PI * rate);
+    glVertex3f(tx + x,ty +  y, 0.0); // point cirle
+  }
+    /* まだ実行されていない命令をすべて実行 */
+
     glEnd();
 
-    /* まだ実行されていない命令をすべて実行 */
+    /* 線の色を指定: 赤 */
+    glColor3d(1.0, 0.0, 0.0); //start point
+
+    /* 描写 */
+    glBegin(GL_POLYGON);
+    /* 図形の頂点を指定 */
+  for (i = 0; i < n; i++) {
+    // 座標を計算
+    rate = (double)i / n;
+    x = r * cos(2.0 * M_PI * rate);
+    y = r * sin(2.0 * M_PI * rate);
+    glVertex3f(kx + x,ky +  y, 0.0); // point cirle
+  }
+    glEnd(); //end point
     glFlush();
 }
 
 /* 100ミリ秒ごとに実行される関数 */
 void timer(int value) {
     /* 正方形のサイズを増加 */
-    sx += 0.01;
+    sx += 0.01; //In this 2 lines, draw the point. 
     sy += 0.01;
+    tx += -0.02;
+    ty += -0.02;
+    kx += 0.01;
+    ky += -0.01;
     /* 画面を再描写 */
     glutPostRedisplay();
     /* 100ミリ秒後に再実行 */
